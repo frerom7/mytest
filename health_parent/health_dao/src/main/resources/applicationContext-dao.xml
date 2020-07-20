@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--配置数据库-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="root" />
+        <property name="password" value="fxd" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/itcasthealth?characterEncoding=utf-8" />
+    </bean>
+
+    <!--配置spring和mybatis整合的sqlsession bean-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"/>
+    </bean>
+
+    <!--配置映射扫描器-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.fxd.dao"/>
+    </bean>
+
+    <!--配置分页插件-->
+    <!--<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        &lt;!&ndash;注入数据源&ndash;&gt;
+        <property name="dataSource" ref="dataSource"/>
+        &lt;!&ndash;配置分页插件&ndash;&gt;
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        &lt;!&ndash;使用下面的方式配置参数,一行设置一个&ndash;&gt;
+                        <props>
+                            &lt;!&ndash;选择合适的分页方式&ndash;&gt;
+                            <prop key="dialect">mysql</prop>
+                        </props>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>-->
+
+</beans>

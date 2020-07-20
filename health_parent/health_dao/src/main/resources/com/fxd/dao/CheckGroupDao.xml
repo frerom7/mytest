@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fxd.dao.CheckGroupDao">
+    <!--新增检查组-->
+    <insert id="add" parameterType="com.fxd.pojo.CheckGroup">
+        <selectKey resultType="int" keyProperty="id" order="AFTER">
+            select last_insert_id()
+        </selectKey>
+        INSERT INTO t_checkgroup (code,name,helpCode,sex,remark,attention)
+        VALUES (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
+    </insert>
+
+    <!--往检查组和检查项中间表插入记录-->
+    <insert id="setCheckGroupAndCheckItem">
+        insert into t_checkgroup_checkitem (checkgroup_id,checkitem_id)
+        values (#{checkgroupId},#{checkitemId})
+    </insert>
+
+    <!--分页查询-->
+    <select id="selectByCondition" parameterType="string" resultType="com.fxd.pojo.CheckGroup">
+        select * from t_checkgroup
+        <if test="value != null and value.length > 0">
+            where name like "%"#{value}"%"
+            or code = #{value}
+            or helpCode like "%"#{value}"%"
+        </if>
+    </select>
+
+    <!--根据id查找检查组-->
+    <select id="findById" parameterType="int" resultType="com.fxd.pojo.CheckGroup">
+        select * from t_checkgroup where id = #{groupId}
+    </select>
+
+    <!--根据id查找检查组对应的检查项id-->
+    <select id="findCheckItemIdsByCheckGroupId" parameterType="int" resultType="int">
+        select checkitem_id from t_checkgroup_checkitem where checkgroup_id = #{groupId}
+    </select>
+
+    <!--修改检查组-->
+    <update id="edit" parameterType="com.fxd.pojo.CheckGroup">
+        update t_checkgroup
+        <set>
+            <if test="code != null and code.length > 0">
+                code = #{code},
+            </if>
+            <if test="name!=null and name.length>0">
+                name=#{name},
+            </if>
+            <if test="helpCode!=null and helpCode.length>0">
+                helpCode=#{helpCode},
+            </if>
+            <if test="sex!=null and sex.length>0">
+                sex=#{sex},
+            </if>
+            <if test="remark!=null and remark.length>0">
+                remark=#{remark},
+            </if>
+            <if test="attention!=null and attention.length>0">
+                attention=#{attention}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--删除检查组与检查项的关联数据-->
+    <delete id="deleteAssociation" parameterType="int">
+        delete from t_checkgroup_checkitem where checkgroup_id = #{groupId}
+    </delete>
+
+    <!--新增检查组与检查项的关联数据-->
+    <insert id="setCheckGroupAndCheckItem" parameterType="map">
+        insert into t_checkgroup_checkitem (checkgroup_id,checkitem_id) values(#{groupId},#{checkitemId})
+    </insert>
+
+
+
+</mapper>
