@@ -1,6 +1,7 @@
 package com.fxd.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.fxd.constant.MessageConstant;
 import com.fxd.dao.CheckGroupDao;
 import com.fxd.entity.PageResult;
 import com.fxd.entity.QueryPageBean;
@@ -66,6 +67,22 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         checkGroupDao.deleteAssociation(checkGroup.getId());
         // 重新建立关联关系（插入中间表）
         setCheckGroupAndCheckItem(checkGroup.getId(),checkitemIds);
+    }
+
+    @Override
+    public void deleteById(Integer groupId) {
+        //若检查组有关联检查项则不能删除
+        List<Integer> list = checkGroupDao.findCheckItemIdsByCheckGroupId(groupId);
+        if (list != null && list.size() > 0) {
+            throw new RuntimeException(MessageConstant.DELETE_CHECKGROUP_ITEM_FAIL);
+        }
+        //若检查项目有关联套餐则不能删除
+        int count = checkGroupDao.findCountByCheckGroupIdT(groupId);
+        if (count > 0) {
+            throw new RuntimeException(MessageConstant.DELETE_CHECKGROUP_SETMEAL_FAIL);
+        }
+        //无关联，可以删除
+        checkGroupDao.deleteById(groupId);
     }
 
 

@@ -68,6 +68,13 @@
         insert into t_checkgroup_checkitem (checkgroup_id,checkitem_id) values(#{groupId},#{checkitemId})
     </insert>
 
+    <!--根据id查找关联套餐数量-->
+    <select id="findCountByCheckGroupIdT" parameterType="int" resultType="int">
+        select count(*) from t_setmeal_checkgroup where checkgroup_id = #{groupId}
+    </select>
 
-
+    <!--删除检查组-->
+    <delete id="deleteById" parameterType="int">
+        delete from t_checkgroup where id =#{groupId}
+    </delete>
 </mapper>

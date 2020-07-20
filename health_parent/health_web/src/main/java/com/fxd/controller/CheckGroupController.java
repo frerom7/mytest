@@ -25,28 +25,41 @@ public class CheckGroupController {
     @Reference
     private CheckGroupService checkgroupService;
 
+
+    @RequestMapping("/deleteById")
+    public Result deleteById(Integer groupId) {
+        try {
+            checkgroupService.deleteById(groupId);
+            return new Result(true, MessageConstant.DELETE_CHECKGROUP_SUCCESS);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            return new Result(false, e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false, MessageConstant.DELETE_CHECKGROUP_FAIL);
+        }
+    }
+
     @RequestMapping("/edit")
     public Result edit(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
             //修改检查组数据
-            checkgroupService.edit(checkGroup,checkitemIds);
-            return new Result(true,MessageConstant.EDIT_CHECKGROUP_SUCCESS);
+            checkgroupService.edit(checkGroup, checkitemIds);
+            return new Result(true, MessageConstant.EDIT_CHECKGROUP_SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.EDIT_CHECKGROUP_FAIL);
+            return new Result(false, MessageConstant.EDIT_CHECKGROUP_FAIL);
         }
     }
-
-
 
     @RequestMapping("/findCheckItemIdsByCheckGroupId")
     public Result findCheckItemIdsByCheckGroupId(Integer groupId) {
         try {
             List<Integer> checkItemIds = checkgroupService.findCheckItemIdsByCheckGroupId(groupId);
-            return new Result(true,MessageConstant.QUERY_CHECKITEM_SUCCESS,checkItemIds);
+            return new Result(true, MessageConstant.QUERY_CHECKITEM_SUCCESS, checkItemIds);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.QUERY_CHECKITEM_FAIL);
+            return new Result(false, MessageConstant.QUERY_CHECKITEM_FAIL);
         }
     }
 
@@ -55,10 +68,10 @@ public class CheckGroupController {
     public Result findById(Integer groupId) {
         try {
             CheckGroup checkGroup = checkgroupService.findById(groupId);
-            return  new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,checkGroup);
+            return new Result(true, MessageConstant.QUERY_CHECKGROUP_SUCCESS, checkGroup);
         } catch (Exception e) {
             e.printStackTrace();
-            return  new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
+            return new Result(false, MessageConstant.QUERY_CHECKGROUP_FAIL);
         }
     }
 

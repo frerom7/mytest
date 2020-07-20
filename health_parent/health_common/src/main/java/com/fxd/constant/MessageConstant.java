@@ -64,5 +64,7 @@ public class MessageConstant {
     public static final String GET_BUSINESS_REPORT_FAIL = "获取运营统计数据失败";
     public static final String GET_SETMEAL_LIST_SUCCESS = "查询套餐列表数据成功";
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
-    public static final String DELETE_CHECKITEM_GROUP_FAIL = "当前检查和下和检查组已经关联，无法删除";
+    public static final String DELETE_CHECKITEM_GROUP_FAIL = "当前检查项和检查组已经关联，无法删除";
+    public static final String DELETE_CHECKGROUP_ITEM_FAIL = "当前检查组和检查项已经关联，无法删除";
+    public static final String DELETE_CHECKGROUP_SETMEAL_FAIL = "当前检查组和套餐已经关联，无法删除";
 }

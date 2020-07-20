@@ -29,4 +29,8 @@ public interface CheckGroupDao {
     void deleteAssociation(Integer groupId);
 
     void setCheckGroupAndCheckItem(Map<String, Integer> map);
+
+    int findCountByCheckGroupIdT(Integer groupId);
+
+    void deleteById(Integer groupId);
 }

@@ -289,7 +289,6 @@
 
                 axios.post("/checkitem/findPage.do", queryPageBean).then(res => {
                         if (res.data.flag) {
-                            this.$message.success(res.data.message);
                             this.pagination.total = res.data.data.total;//响应总记录数
                             this.dataList = res.data.data.rows //响应的数据
                         } else {

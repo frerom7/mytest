@@ -296,8 +296,7 @@
             handleEdit() {
                 //关闭弹框
                 this.dialogFormVisible4Edit = false;
-                axios.post("/checkgroup/edit.do?checkitemIds="+this.checkitemIds,this.formData).then(res =>
-                {
+                axios.post("/checkgroup/edit.do?checkitemIds=" + this.checkitemIds, this.formData).then(res => {
                     this.$message({
                         message: res.data.message,
                         type: res.data.flag ? 'success' : "error"
@@ -331,7 +330,6 @@
                     };
                 axios.post("/checkgroup/findPage.do", queryPageBean).then(res => {
                     if (res.data.flag) {
-                        this.$message.success(res.data.message);
                         this.pagination.total = res.data.data.total;
                         this.dataList = res.data.data.rows;
                     } else {
@@ -382,11 +380,11 @@
                                 //查询所有检查项成功
                                 this.tableData = res.data.data;
                                 //根据groupId查询checkItemIds
-                                axios.get("/checkgroup/findCheckItemIdsByCheckGroupId.do?groupId="+row.id).then(res =>{
+                                axios.get("/checkgroup/findCheckItemIdsByCheckGroupId.do?groupId=" + row.id).then(res => {
                                     if (res.data.flag) {
                                         this.checkitemIds = res.data.data;
                                         this.$message.success(res.data.message);
-                                    }else{
+                                    } else {
                                         this.$message.error(res.data.message);
                                     }
                                 })
@@ -402,6 +400,23 @@
             },
             // 删除
             handleDelete(row) {
+                this.$confirm('确定要删除' + row.name + '吗？', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //发送删除请求
+                    axios.post('/checkgroup/deleteById.do?groupId=' + row.id).then(res => {
+                        this.$message({
+                            message: res.data.message,
+                            type: res.data.flag ? 'success' : 'error'
+                        })
+                    });
+                    //重新加载数据
+                    this.findPage();
+                }).catch(() => {
+                    this.$message.info('操作已取消');
+                })
             }
         }
     })
