@@ -26,7 +26,7 @@ public class CheckGroupController {
     private CheckGroupService checkgroupService;
 
     @RequestMapping("/edit")
-    public Result edit(CheckGroup checkGroup, Integer[] checkitemIds) {
+    public Result edit(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         try {
             //修改检查组数据
             checkgroupService.edit(checkGroup,checkitemIds);
@@ -64,7 +64,7 @@ public class CheckGroupController {
 
     //新增检查组
     @RequestMapping("/add")
-    public Result add(CheckGroup checkGroup, Integer[] checkitemIds) {
+    public Result add(@RequestBody CheckGroup checkGroup, Integer[] checkitemIds) {
         /*Integer[] checkitemIds = (Integer[]) map.get("checkitemIds");
         CheckGroup checkGroup = (CheckGroup) map.get("checkGroup");*/
         try {

@@ -12,12 +12,6 @@
         VALUES (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
     </insert>
 
-    <!--往检查组和检查项中间表插入记录-->
-    <insert id="setCheckGroupAndCheckItem">
-        insert into t_checkgroup_checkitem (checkgroup_id,checkitem_id)
-        values (#{checkgroupId},#{checkitemId})
-    </insert>
-
     <!--分页查询-->
     <select id="selectByCondition" parameterType="string" resultType="com.fxd.pojo.CheckGroup">
         select * from t_checkgroup
