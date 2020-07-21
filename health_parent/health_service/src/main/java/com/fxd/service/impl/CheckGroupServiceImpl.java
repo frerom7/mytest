@@ -71,17 +71,15 @@ public class CheckGroupServiceImpl implements CheckGroupService {
 
     @Override
     public void deleteById(Integer groupId) {
-        //若检查组有关联检查项则不能删除
-        List<Integer> list = checkGroupDao.findCheckItemIdsByCheckGroupId(groupId);
-        if (list != null && list.size() > 0) {
-            throw new RuntimeException(MessageConstant.DELETE_CHECKGROUP_ITEM_FAIL);
-        }
+
         //若检查项目有关联套餐则不能删除
         int count = checkGroupDao.findCountByCheckGroupIdT(groupId);
         if (count > 0) {
             throw new RuntimeException(MessageConstant.DELETE_CHECKGROUP_SETMEAL_FAIL);
         }
-        //无关联，可以删除
+        // 没有被套餐使用,就可以删除数据
+        // 先删除检查组与检查项的关系
+        checkGroupDao.deleteAssociation(groupId);
         checkGroupDao.deleteById(groupId);
     }
 
