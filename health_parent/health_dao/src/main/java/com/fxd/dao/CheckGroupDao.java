@@ -33,4 +33,7 @@ public interface CheckGroupDao {
     int findCountByCheckGroupIdT(Integer groupId);
 
     void deleteById(Integer groupId);
+
+    List<CheckGroup> findAll();
+
 }

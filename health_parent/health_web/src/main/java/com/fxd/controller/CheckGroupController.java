@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,6 +24,16 @@ public class CheckGroupController {
     @Reference
     private CheckGroupService checkgroupService;
 
+    @RequestMapping("/findAll")
+    public Result findAll(){
+        try {
+            List<CheckGroup> list = checkgroupService.findAll();
+            return new Result(true,MessageConstant.QUERY_CHECKGROUP_SUCCESS,list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,MessageConstant.QUERY_CHECKGROUP_FAIL);
+        }
+    }
 
     @RequestMapping("/deleteById")
     public Result deleteById(Integer groupId) {

@@ -60,13 +60,13 @@ public class CheckGroupServiceImpl implements CheckGroupService {
     }
 
     @Override
-    public void edit(CheckGroup checkGroup,Integer[] checkitemIds) {
+    public void edit(CheckGroup checkGroup, Integer[] checkitemIds) {
         //更新检查组表 update 语句
         checkGroupDao.edit(checkGroup);
         //先删除检查组关联的检查项记录 （中间表）
         checkGroupDao.deleteAssociation(checkGroup.getId());
         // 重新建立关联关系（插入中间表）
-        setCheckGroupAndCheckItem(checkGroup.getId(),checkitemIds);
+        setCheckGroupAndCheckItem(checkGroup.getId(), checkitemIds);
     }
 
     @Override
@@ -85,23 +85,27 @@ public class CheckGroupServiceImpl implements CheckGroupService {
         checkGroupDao.deleteById(groupId);
     }
 
+    @Override
+    public List<CheckGroup> findAll() {
+        return checkGroupDao.findAll();
+    }
+
 
     //根据检查组id将其关联的检查项设置到关联表中
      /*
     往检查组和检查项中间表写记录(新增检查组、编辑检查组公共的代码)
      */
-    public void setCheckGroupAndCheckItem(Integer groupId,Integer[] checkitemIds){
-        if(checkitemIds != null && checkitemIds.length> 0){
+    public void setCheckGroupAndCheckItem(Integer groupId, Integer[] checkitemIds) {
+        if (checkitemIds != null && checkitemIds.length > 0) {
             for (Integer checkitemId : checkitemIds) {
                 //为了方便测试传入map对象
-                Map<String,Integer> map = new HashMap<>();
-                map.put("groupId",groupId);
-                map.put("checkitemId",checkitemId);
+                Map<String, Integer> map = new HashMap<>();
+                map.put("groupId", groupId);
+                map.put("checkitemId", checkitemId);
                 checkGroupDao.setCheckGroupAndCheckItem(map);
             }
         }
     }
-
 
 
 }

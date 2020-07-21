@@ -349,9 +349,11 @@
                     if (res.data.flag) {
                         this.tableData = res.data.data;
                         //查询所有检查项成功
+
+                    }else{
                         this.$message({
                             message: res.data.message,
-                            type: 'success'
+                            type: 'error'
                         });
                     }
                 })

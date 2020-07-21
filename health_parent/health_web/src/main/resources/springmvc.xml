@@ -50,4 +50,7 @@
         <property name="maxInMemorySize" value="4096" />
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
+
+    <!--引入redis-->
+    <import resource="classpath:spring-redis.xml"/>
 </beans>
