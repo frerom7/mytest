@@ -15,6 +15,7 @@
         <module>health_interface</module>
         <module>health_service</module>
         <module>health_web</module>
+        <module>health_jobs</module>
     </modules>
     <!--指定打包方式pom-->
     <packaging>pom</packaging>
